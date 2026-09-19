@@ -1,0 +1,1656 @@
+*```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SkillGraph AI | Smart Education</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#0b1020;
+    color:#eef2ff;
+}
+
+.app{
+    display:flex;
+    min-height:100vh;
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+    width:245px;
+    background:#0d1428;
+    border-right:1px solid #293653;
+    padding:25px 16px;
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+}
+
+.logo{
+    font-size:23px;
+    font-weight:800;
+    margin-bottom:5px;
+}
+
+.tagline{
+    color:#8f9bb8;
+    font-size:12px;
+    margin-bottom:30px;
+}
+
+.nav button{
+    width:100%;
+    border:none;
+    background:transparent;
+    color:#9faac5;
+    text-align:left;
+    padding:13px;
+    margin:4px 0;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.nav button:hover,
+.nav button.active{
+    background:#1c2948;
+    color:white;
+}
+
+.main{
+    margin-left:245px;
+    width:calc(100% - 245px);
+    padding:30px;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+/* ================= HEADER ================= */
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.header h1{
+    font-size:28px;
+}
+
+.subtitle{
+    color:#909dbc;
+    font-size:13px;
+    margin-top:5px;
+}
+
+.pill{
+    background:#202c4b;
+    padding:7px 12px;
+    border-radius:20px;
+    font-size:12px;
+}
+
+/* ================= CARDS ================= */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.two-grid{
+    display:grid;
+    grid-template-columns:1.3fr .7fr;
+    gap:15px;
+    margin-top:15px;
+}
+
+.card{
+    background:#121a2e;
+    border:1px solid #293653;
+    border-radius:16px;
+    padding:20px;
+}
+
+.card h2{
+    font-size:18px;
+    margin-bottom:15px;
+}
+
+.metric{
+    font-size:30px;
+    font-weight:bold;
+    margin:10px 0;
+}
+
+.muted{
+    color:#929db8;
+}
+
+.good{
+    color:#42d392;
+}
+
+.warning{
+    color:#ffc857;
+}
+
+.danger{
+    color:#ff6b7a;
+}
+
+/* ================= SKILLS ================= */
+
+.skill{
+    margin:18px 0;
+}
+
+.skill-header{
+    display:flex;
+    justify-content:space-between;
+    font-size:13px;
+}
+
+.progress{
+    height:9px;
+    background:#27334e;
+    border-radius:10px;
+    overflow:hidden;
+    margin-top:7px;
+}
+
+.progress-bar{
+    height:100%;
+    background:#7c8cff;
+}
+
+/* ================= BUTTON ================= */
+
+.btn{
+    border:none;
+    border-radius:9px;
+    padding:11px 16px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.primary{
+    background:#7c8cff;
+    color:white;
+}
+
+.secondary{
+    background:#202c4b;
+    color:white;
+    border:1px solid #293653;
+}
+
+/* ================= TABLE ================= */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,
+td{
+    padding:13px;
+    text-align:left;
+    border-bottom:1px solid #293653;
+    font-size:13px;
+}
+
+/* ================= ROADMAP ================= */
+
+.roadmap-item{
+    display:flex;
+    gap:15px;
+    padding:16px 0;
+    border-bottom:1px solid #293653;
+}
+
+.number{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    background:#28365d;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+}
+
+/* ================= CHAT ================= */
+
+.chat{
+    height:300px;
+    overflow:auto;
+    background:#0d1527;
+    border-radius:12px;
+    padding:15px;
+    margin-bottom:12px;
+}
+
+.message{
+    max-width:80%;
+    padding:10px 13px;
+    border-radius:11px;
+    margin:8px 0;
+    font-size:13px;
+    line-height:1.5;
+}
+
+.ai{
+    background:#1d2a49;
+}
+
+.user{
+    background:#30395f;
+    margin-left:auto;
+}
+
+.chat-input{
+    display:flex;
+    gap:8px;
+}
+
+.chat-input input{
+    flex:1;
+    background:#0e1629;
+    border:1px solid #293653;
+    color:white;
+    padding:12px;
+    border-radius:9px;
+}
+
+/* ================= GRAPH ================= */
+
+.graph{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
+    padding:35px 10px;
+}
+
+.node{
+    background:#1c2948;
+    border:1px solid #5367ad;
+    padding:16px;
+    border-radius:12px;
+    text-align:center;
+    min-width:150px;
+}
+
+.arrow{
+    font-size:25px;
+    color:#7c8cff;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:900px){
+
+    .sidebar{
+        width:190px;
+    }
+
+    .main{
+        margin-left:190px;
+        width:calc(100% - 190px);
+    }
+
+    .grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .two-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar">
+
+<div class="logo">
+⚡ SkillGraph AI
+</div>
+
+<div class="tagline">
+Smart Education & Skill Management
+</div>
+
+<div class="nav">
+
+<button class="active"
+onclick="showPage('dashboard',this)">
+🏠 Dashboard
+</button>
+
+<button onclick="showPage('assessment',this)">
+📝 Adaptive Assessment
+</button>
+
+<button onclick="showPage('skillgap',this)">
+🧠 AI Skill Gap
+</button>
+
+<button onclick="showPage('roadmap',this)">
+🛣 Personalized Roadmap
+</button>
+
+<button onclick="showPage('tutor',this)">
+🤖 AI Tutor
+</button>
+
+<button onclick="showPage('analytics',this)">
+📊 Analytics
+</button>
+
+</div>
+
+</aside>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="main">
+
+
+<!-- ================================================= -->
+<!-- DASHBOARD -->
+<!-- ================================================= -->
+
+<section id="dashboard" class="page active">
+
+<div class="header">
+
+<div>
+<h1>Student Dashboard</h1>
+<div class="subtitle">
+B.Tech CSE • Semester 3
+</div>
+</div>
+
+<div class="pill">
+🎯 Career: Data / Backend
+</div>
+
+</div>
+
+
+<div class="grid">
+
+<div class="card">
+
+<div class="muted">
+Overall Mastery
+</div>
+
+<div class="metric">
+68%
+</div>
+
+<div class="good">
+↑ 8% this month
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="muted">
+Career Readiness
+</div>
+
+<div class="metric">
+64%
+</div>
+
+<div class="pill">
+Developing
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="muted">
+Priority Skill Gap
+</div>
+
+<div class="metric">
+Probability
+</div>
+
+<div class="danger">
+42% mastery
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="muted">
+Today's Study
+</div>
+
+<div class="metric">
+35m
+</div>
+
+<div class="muted">
+of 60 minutes
+</div>
+
+</div>
+
+</div>
+
+
+<div class="two-grid">
+
+
+<div class="card">
+
+<h2>Current Skill Profile</h2>
+
+
+<div class="skill">
+
+<div class="skill-header">
+<span>Probability</span>
+<b>42%</b>
+</div>
+
+<div class="progress">
+<div class="progress-bar"
+style="width:42%">
+</div>
+</div>
+
+</div>
+
+
+<div class="skill">
+
+<div class="skill-header">
+<span>DBMS</span>
+<b>61%</b>
+</div>
+
+<div class="progress">
+<div class="progress-bar"
+style="width:61%">
+</div>
+</div>
+
+</div>
+
+
+<div class="skill">
+
+<div class="skill-header">
+<span>OOP</span>
+<b>84%</b>
+</div>
+
+<div class="progress">
+<div class="progress-bar"
+style="width:84%">
+</div>
+</div>
+
+</div>
+
+
+<div class="skill">
+
+<div class="skill-header">
+<span>SQL</span>
+<b>55%</b>
+</div>
+
+<div class="progress">
+<div class="progress-bar"
+style="width:55%">
+</div>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>🤖 AI Next-Best Action</h2>
+
+<p class="muted">
+Based on your current skill profile:
+</p>
+
+<br>
+
+<p>
+Revise <b>Conditional Probability</b>
+</p>
+
+<br>
+
+<p>
+→ Attempt 5 adaptive questions
+</p>
+
+<br>
+
+<p>
+→ Start SQL Joins
+</p>
+
+<br>
+
+<button
+class="btn primary"
+onclick="showPage('assessment')">
+
+Start Learning
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ================================================= -->
+<!-- ADAPTIVE ASSESSMENT -->
+<!-- ================================================= -->
+
+<section id="assessment" class="page">
+
+<div class="header">
+
+<div>
+
+<h1>Adaptive Diagnostic Assessment</h1>
+
+<div class="subtitle">
+AI adjusts difficulty according to your answers
+</div>
+
+</div>
+
+<div class="pill"
+id="difficulty">
+
+Difficulty 4/10
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2 id="question">
+
+Question 1
+
+</h2>
+
+<p style="margin:20px 0">
+
+If P(A)=0.5 and P(B)=0.4
+and A,B are independent,
+what is P(A ∩ B)?
+
+</p>
+
+
+<div>
+
+<button
+class="btn secondary"
+style="width:100%;margin:5px"
+onclick="answerQuestion(false)">
+
+0.9
+
+</button>
+
+
+<button
+class="btn secondary"
+style="width:100%;margin:5px"
+onclick="answerQuestion(true)">
+
+0.2
+
+</button>
+
+
+<button
+class="btn secondary"
+style="width:100%;margin:5px"
+onclick="answerQuestion(false)">
+
+0.1
+
+</button>
+
+
+<button
+class="btn secondary"
+style="width:100%;margin:5px"
+onclick="answerQuestion(false)">
+
+0.4
+
+</button>
+
+</div>
+
+
+<p
+id="feedback"
+style="margin-top:20px">
+</p>
+
+</div>
+
+</section>
+
+
+
+<!-- ================================================= -->
+<!-- SKILL GAP -->
+<!-- ================================================= -->
+
+<section id="skillgap" class="page">
+
+<div class="header">
+
+<div>
+
+<h1>AI Skill-Gap Engine</h1>
+
+<div class="subtitle">
+Current mastery vs target career requirements
+</div>
+
+</div>
+
+<div class="pill">
+Explainable AI
+</div>
+
+</div>
+
+
+<div class="card">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Skill</th>
+<th>Current</th>
+<th>Target</th>
+<th>Gap</th>
+<th>Priority</th>
+
+</tr>
+
+</thead>
+
+
+<tbody>
+
+<tr>
+
+<td>Probability</td>
+
+<td>42%</td>
+
+<td>80%</td>
+
+<td class="danger">
+38%
+</td>
+
+<td class="danger">
+HIGH
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>SQL</td>
+
+<td>55%</td>
+
+<td>75%</td>
+
+<td class="warning">
+20%
+</td>
+
+<td class="warning">
+MEDIUM
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>DBMS</td>
+
+<td>61%</td>
+
+<td>80%</td>
+
+<td class="warning">
+19%
+</td>
+
+<td class="warning">
+MEDIUM
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>OOP</td>
+
+<td>84%</td>
+
+<td>80%</td>
+
+<td class="good">
+0%
+</td>
+
+<td class="good">
+READY
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<div class="two-grid">
+
+
+<div class="card">
+
+<h2>
+🕸 Knowledge / Prerequisite Graph
+</h2>
+
+
+<div class="graph">
+
+<div class="node">
+Probability Basics
+</div>
+
+<div class="arrow">
+→
+</div>
+
+<div class="node">
+Conditional Probability
+</div>
+
+<div class="arrow">
+→
+</div>
+
+<div class="node">
+Statistics
+</div>
+
+<div class="arrow">
+→
+</div>
+
+<div class="node">
+Data / ML
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+🤖 AI Diagnosis
+</h2>
+
+<p>
+
+<b>Root Issue:</b>
+
+</p>
+
+<br>
+
+<p class="danger">
+
+Probability foundations are incomplete.
+
+</p>
+
+<br>
+
+<p class="muted">
+
+System recommends fixing prerequisite concepts before advanced learning.
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ================================================= -->
+<!-- ROADMAP -->
+<!-- ================================================= -->
+
+<section id="roadmap" class="page">
+
+<div class="header">
+
+<div>
+
+<h1>Personalized Learning Roadmap</h1>
+
+<div class="subtitle">
+Generated using skill gaps + prerequisites + career goal
+</div>
+
+</div>
+
+<div class="pill">
+12 Week Plan
+</div>
+
+</div>
+
+
+<div class="card">
+
+
+<div class="roadmap-item">
+
+<div class="number">
+1
+</div>
+
+<div>
+
+<b>
+Probability Foundations
+</b>
+
+<p class="muted">
+2 days • Micro lessons + adaptive quiz
+</p>
+
+</div>
+
+</div>
+
+
+<div class="roadmap-item">
+
+<div class="number">
+2
+</div>
+
+<div>
+
+<b>
+Conditional Probability
+</b>
+
+<p class="muted">
+3 days • AI Tutor + practice
+</p>
+
+</div>
+
+</div>
+
+
+<div class="roadmap-item">
+
+<div class="number">
+3
+</div>
+
+<div>
+
+<b>
+SQL Joins & Aggregation
+</b>
+
+<p class="muted">
+4 days • Coding exercises
+</p>
+
+</div>
+
+</div>
+
+
+<div class="roadmap-item">
+
+<div class="number">
+4
+</div>
+
+<div>
+
+<b>
+DBMS Mini Project
+</b>
+
+<p class="muted">
+1 week • Project verification
+</p>
+
+</div>
+
+</div>
+
+
+<div class="roadmap-item">
+
+<div class="number">
+5
+</div>
+
+<div>
+
+<b>
+Interview Preparation
+</b>
+
+<p class="muted">
+2 weeks • Adaptive practice
+</p>
+
+</div>
+
+</div>
+
+
+<br>
+
+
+<button
+class="btn primary"
+onclick="regenerateRoadmap()">
+
+🔄 Regenerate Roadmap
+
+</button>
+
+
+</div>
+
+</section>
+
+
+
+<!-- ================================================= -->
+<!-- AI TUTOR -->
+<!-- ================================================= -->
+
+<section id="tutor" class="page">
+
+<div class="header">
+
+<div>
+
+<h1>🤖 AI Tutor</h1>
+
+<div class="subtitle">
+Personalized learning assistant
+</div>
+
+</div>
+
+<div class="pill">
+RAG Ready
+</div>
+
+</div>
+
+
+<div class="card">
+
+
+<div
+class="chat"
+id="chat">
+
+<div class="message ai">
+
+Hi! 👋
+
+Tumhari current skill profile ke according
+Probability priority topic hai.
+
+Conditional Probability se start karein?
+
+</div>
+
+</div>
+
+
+<div class="chat-input">
+
+<input
+id="userMessage"
+placeholder="Ask a question..."
+onkeydown="if(event.key==='Enter') sendMessage()">
+
+<button
+class="btn primary"
+onclick="sendMessage()">
+
+Send
+
+</button>
+
+</div>
+
+
+<br>
+
+
+<button
+class="btn secondary"
+onclick="quickMessage('Explain simply')">
+
+Explain Simply
+
+</button>
+
+
+<button
+class="btn secondary"
+onclick="quickMessage('Give me a hint')">
+
+Give Hint
+
+</button>
+
+
+<button
+class="btn secondary"
+onclick="quickMessage('Quiz me')">
+
+Quiz Me
+
+</button>
+
+</div>
+
+</section>
+
+
+
+<!-- ================================================= -->
+<!-- ANALYTICS -->
+<!-- ================================================= -->
+
+<section id="analytics" class="page">
+
+<div class="header">
+
+<div>
+
+<h1>📊 Learning Analytics</h1>
+
+<div class="subtitle">
+Student + Teacher Intelligence
+</div>
+
+</div>
+
+<div class="pill">
+Live Prototype
+</div>
+
+</div>
+
+
+<div class="grid">
+
+
+<div class="card">
+
+<div class="muted">
+Questions Attempted
+</div>
+
+<div class="metric">
+126
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="muted">
+Accuracy
+</div>
+
+<div class="metric">
+74%
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="muted">
+Concepts Mastered
+</div>
+
+<div class="metric">
+18
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="muted">
+Interventions
+</div>
+
+<div class="metric">
+4
+</div>
+
+</div>
+
+
+</div>
+
+
+<div class="two-grid">
+
+
+<div class="card">
+
+<h2>
+❌ Mistake Intelligence
+</h2>
+
+<p>
+Conceptual misunderstanding
+<b>42%</b>
+</p>
+
+<div class="progress">
+<div
+class="progress-bar"
+style="width:42%">
+</div>
+</div>
+
+
+<p>
+Question interpretation
+<b>21%</b>
+</p>
+
+<div class="progress">
+<div
+class="progress-bar"
+style="width:21%">
+</div>
+</div>
+
+
+<p>
+Calculation errors
+<b>18%</b>
+</p>
+
+<div class="progress">
+<div
+class="progress-bar"
+style="width:18%">
+</div>
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+👨‍🏫 Teacher Alert
+</h2>
+
+<br>
+
+<p class="danger">
+
+<b>11 students</b>
+
+</p>
+
+<p>
+need Probability intervention.
+
+</p>
+
+<br>
+
+<p class="muted">
+
+Suggested action:
+
+Prerequisite revision before
+advanced topic.
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+</main>
+
+</div>
+
+
+
+<script>
+
+/* =====================================================
+   PAGE NAVIGATION
+===================================================== */
+
+function showPage(pageId, button){
+
+    document
+    .querySelectorAll(".page")
+    .forEach(page => {
+
+        page.classList.remove("active");
+
+    });
+
+
+    const page =
+    document.getElementById(pageId);
+
+    if(page){
+
+        page.classList.add("active");
+
+    }
+
+
+    document
+    .querySelectorAll(".nav button")
+    .forEach(btn => {
+
+        btn.classList.remove("active");
+
+    });
+
+
+    if(button){
+
+        button.classList.add("active");
+
+    }
+
+}
+
+
+/* =====================================================
+   ADAPTIVE ASSESSMENT
+===================================================== */
+
+let difficulty = 4;
+
+function answerQuestion(correct){
+
+    const feedback =
+    document.getElementById("feedback");
+
+    const difficultyElement =
+    document.getElementById("difficulty");
+
+
+    if(correct){
+
+        difficulty++;
+
+        if(difficulty > 10){
+
+            difficulty = 10;
+
+        }
+
+
+        feedback.innerHTML =
+
+        `<span class="good">
+
+        ✅ Correct!
+
+        </span>
+
+        Difficulty increased.
+
+        AI updates your mastery profile.`;
+
+    }
+
+    else{
+
+        difficulty--;
+
+        if(difficulty < 2){
+
+            difficulty = 2;
+
+        }
+
+
+        feedback.innerHTML =
+
+        `<span class="danger">
+
+        ❌ Incorrect.
+
+        </span>
+
+        AI detected a possible conceptual gap.
+
+        Recommended action: revise Probability Basics.`;
+
+    }
+
+
+    difficultyElement.innerText =
+    "Difficulty " + difficulty + "/10";
+
+}
+
+
+/* =====================================================
+   ROADMAP
+===================================================== */
+
+function regenerateRoadmap(){
+
+    alert(
+
+    "🤖 AI Roadmap Engine\n\n" +
+
+    "Roadmap regenerated using:\n" +
+
+    "• Skill Gap\n" +
+
+    "• Prerequisites\n" +
+
+    "• Career Goal\n" +
+
+    "• Recent Performance"
+
+    );
+
+}
+
+
+/* =====================================================
+   AI TUTOR
+===================================================== */
+
+function sendMessage(){
+
+    const input =
+    document.getElementById("userMessage");
+
+    const message =
+    input.value.trim();
+
+
+    if(message === ""){
+
+        return;
+
+    }
+
+
+    addMessage(message,"user");
+
+    input.value = "";
+
+
+    setTimeout(function(){
+
+        let response = generateAIResponse(message);
+
+        addMessage(response,"ai");
+
+    },500);
+
+}
+
+
+function addMessage(text,type){
+
+    const chat =
+    document.getElementById("chat");
+
+
+    const div =
+    document.createElement("div");
+
+    div.className =
+    "message " + type;
+
+    div.innerText =
+    text;
+
+
+    chat.appendChild(div);
+
+    chat.scrollTop =
+    chat.scrollHeight;
+
+}
+
+
+function generateAIResponse(message){
+
+    const text =
+    message.toLowerCase();
+
+
+    if(
+        text.includes("probability") ||
+        text.includes("conditional")
+    ){
+
+        return (
+
+        "Simple explanation:\n\n" +
+
+        "Conditional Probability ka matlab hai " +
+
+        "kisi event ke hone ki probability jab " +
+
+        "hume already kisi doosre event ke hone ki information pata ho.\n\n" +
+
+        "Formula:\n" +
+
+        "P(A|B) = P(A ∩ B) / P(B)\n\n" +
+
+        "Tumhare current skill profile ke according " +
+
+        "pehle Probability Basics revise karna recommended hai."
+
+        );
+
+    }
+
+
+    if(text.includes("hint")){
+
+        return (
+
+        "💡 Hint:\n\n" +
+
+        "Pehle identify karo ki given events independent hain " +
+
+        "ya dependent. Agar independent hain, " +
+
+        "P(A ∩ B) = P(A) × P(B)."
+
+        );
+
+    }
+
+
+    if(text.includes("quiz")){
+
+        return (
+
+        "🧠 Quick Quiz:\n\n" +
+
+        "If P(A)=0.5 and P(B)=0.2 " +
+
+        "and both events are independent, " +
+
+        "then P(A ∩ B) kya hoga?"
+
+        );
+
+    }
+
+
+    if(text.includes("simple")){
+
+        return (
+
+        "Bilkul simple way mein:\n\n" +
+
+        "Main concept ko 3 steps mein explain karunga:\n" +
+
+        "1️⃣ Basic definition\n" +
+
+        "2️⃣ Real-world example\n" +
+
+        "3️⃣ Practice question\n\n" +
+
+        "Isse tum ratne ke bajay concept samajh paoge."
+
+        );
+
+    }
+
+
+    return (
+
+        "Good question! 🤖\n\n" +
+
+        "Tumhare current learning profile ke basis par " +
+
+        "main pehle concept ko simple example se explain " +
+
+        "karunga, phir practice question dunga.\n\n" +
+
+        "Try asking about Probability, DBMS, SQL or OOP."
+
+    );
+
+}
+
+
+function quickMessage(message){
+
+    document
+    .getElementById("userMessage")
+    .value = message;
+
+    sendMessage();
+
+}
+
+</script>
+
+</body>
+</html>
